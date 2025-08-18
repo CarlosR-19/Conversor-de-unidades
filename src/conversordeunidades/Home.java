@@ -127,6 +127,11 @@ public class Home extends javax.swing.JFrame {
         btnConvertir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnConvertir.setForeground(new java.awt.Color(255, 255, 255));
         btnConvertir.setText("Convertir");
+        btnConvertir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConvertirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnConvertir, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 372, -1, 65));
 
         btnLimpiar.setBackground(new java.awt.Color(255, 51, 51));
@@ -208,6 +213,25 @@ public class Home extends javax.swing.JFrame {
                 break;
         }
     }//GEN-LAST:event_cboCategoriaItemStateChanged
+
+    private void btnConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConvertirActionPerformed
+        // TODO add your handling code here:
+        String conver = cboCategoria.getSelectedItem().toString();
+        
+        String Opcion1= cboOrigen.getSelectedItem().toString();
+        String Opcion2 = cboDestino.getSelectedItem().toString();
+        
+        if(conver == "MONEDA"){
+            // del preimer combo modeda 
+            // del segundo combo 
+            // todas al conversiones
+            
+        }
+        
+        
+        
+        
+    }//GEN-LAST:event_btnConvertirActionPerformed
 
     /**
      * @param args the command line arguments
