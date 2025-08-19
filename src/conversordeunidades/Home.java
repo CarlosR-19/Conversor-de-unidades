@@ -112,10 +112,14 @@ public class Home extends javax.swing.JFrame {
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
 
         cboOrigen.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        cboOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboOrigenActionPerformed(evt);
+            }
+        });
         getContentPane().add(cboOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 159, -1));
 
         cboDestino.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cboDestino.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cboDestino.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboDestinoActionPerformed(evt);
@@ -199,17 +203,55 @@ public class Home extends javax.swing.JFrame {
                 cboDestino.addItem("Euros");
                 cboDestino.addItem("Dolares");
                 break;
+                
             case "LONGITUD":
                 cboOrigen.removeAllItems();
                 cboOrigen.addItem("Metro");
                 cboOrigen.addItem("Pulgada");
                 cboOrigen.addItem("Pies");
+                
+                cboDestino.removeAllItems();
+                cboDestino.addItem("Metro");
+                cboDestino.addItem("Pulgada");
+                cboDestino.addItem("Pies");
                 break;
+                
             case "PESO":
                 cboOrigen.removeAllItems();
                 cboOrigen.addItem("Kilogramo");
                 cboOrigen.addItem("Libra");
                 cboOrigen.addItem("Onza");
+                
+                cboDestino.removeAllItems();
+                cboDestino.addItem("Kilogramo");
+                cboDestino.addItem("Libra");
+                cboDestino.addItem("Onza");
+                break;
+                
+            case "TEMPERATURA":
+                
+                cboOrigen.removeAllItems();
+                cboOrigen.addItem("Celcius");
+                cboOrigen.addItem("Fahrenheit");
+                cboOrigen.addItem("Kelvin");
+                
+                cboDestino.removeAllItems();
+                cboDestino.addItem("Celcius");
+                cboDestino.addItem("Fahrenheit");
+                cboDestino.addItem("Kelvin");
+                break;
+                
+            case "VOLUMEN":
+                
+                cboOrigen.removeAllItems();
+                cboOrigen.addItem("Litro");
+                cboOrigen.addItem("Metro Cúbico");
+                cboOrigen.addItem("Mililitro");
+                
+                cboDestino.removeAllItems();
+                cboDestino.addItem("Litro");
+                cboDestino.addItem("Metro Cúbico");
+                cboDestino.addItem("Mililitro");
                 break;
         }
     }//GEN-LAST:event_cboCategoriaItemStateChanged
@@ -232,6 +274,10 @@ public class Home extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnConvertirActionPerformed
+
+    private void cboOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboOrigenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboOrigenActionPerformed
 
     /**
      * @param args the command line arguments
