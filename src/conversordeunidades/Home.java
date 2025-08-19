@@ -4,6 +4,8 @@
  */
 package conversordeunidades;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Carlos
@@ -33,7 +35,7 @@ public class Home extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         cboCategoria = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        txtValor = new javax.swing.JTextField();
+        txtCantidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         cboOrigen = new javax.swing.JComboBox<>();
@@ -90,18 +92,18 @@ public class Home extends javax.swing.JFrame {
         getContentPane().add(cboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 125, 168, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
-        jLabel3.setText("Valor:");
+        jLabel3.setText("Cantidad:");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
-        txtValor.setBackground(new java.awt.Color(255, 255, 255));
-        txtValor.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtValor.setForeground(new java.awt.Color(0, 0, 0));
-        txtValor.addActionListener(new java.awt.event.ActionListener() {
+        txtCantidad.setBackground(new java.awt.Color(255, 255, 255));
+        txtCantidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtCantidad.setForeground(new java.awt.Color(0, 0, 0));
+        txtCantidad.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtValorActionPerformed(evt);
+                txtCantidadActionPerformed(evt);
             }
         });
-        getContentPane().add(txtValor, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 190, 40));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 190, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Unidad de Origen");
@@ -177,9 +179,9 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtValorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtValorActionPerformed
+    private void txtCantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCantidadActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtValorActionPerformed
+    }//GEN-LAST:event_txtCantidadActionPerformed
 
     private void cboDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDestinoActionPerformed
         // TODO add your handling code here:
@@ -190,7 +192,7 @@ public class Home extends javax.swing.JFrame {
         String  categoria = cboCategoria.getSelectedItem().toString();
                 
         switch (categoria){
-            case "MONEDA":
+            case "MONEDA" -> {
                 cboOrigen.removeAllItems();
                 
                 cboOrigen.addItem("Soles");
@@ -202,9 +204,9 @@ public class Home extends javax.swing.JFrame {
                 cboDestino.addItem("Soles");
                 cboDestino.addItem("Euros");
                 cboDestino.addItem("Dolares");
-                break;
+            }
                 
-            case "LONGITUD":
+            case "LONGITUD" -> {
                 cboOrigen.removeAllItems();
                 cboOrigen.addItem("Metro");
                 cboOrigen.addItem("Pulgada");
@@ -214,9 +216,9 @@ public class Home extends javax.swing.JFrame {
                 cboDestino.addItem("Metro");
                 cboDestino.addItem("Pulgada");
                 cboDestino.addItem("Pies");
-                break;
+            }
                 
-            case "PESO":
+            case "PESO" -> {
                 cboOrigen.removeAllItems();
                 cboOrigen.addItem("Kilogramo");
                 cboOrigen.addItem("Libra");
@@ -226,10 +228,9 @@ public class Home extends javax.swing.JFrame {
                 cboDestino.addItem("Kilogramo");
                 cboDestino.addItem("Libra");
                 cboDestino.addItem("Onza");
-                break;
+            }
                 
-            case "TEMPERATURA":
-                
+            case "TEMPERATURA" -> {
                 cboOrigen.removeAllItems();
                 cboOrigen.addItem("Celcius");
                 cboOrigen.addItem("Fahrenheit");
@@ -239,10 +240,9 @@ public class Home extends javax.swing.JFrame {
                 cboDestino.addItem("Celcius");
                 cboDestino.addItem("Fahrenheit");
                 cboDestino.addItem("Kelvin");
-                break;
+            }
                 
-            case "VOLUMEN":
-                
+            case "VOLUMEN" -> {
                 cboOrigen.removeAllItems();
                 cboOrigen.addItem("Litro");
                 cboOrigen.addItem("Metro Cúbico");
@@ -252,27 +252,53 @@ public class Home extends javax.swing.JFrame {
                 cboDestino.addItem("Litro");
                 cboDestino.addItem("Metro Cúbico");
                 cboDestino.addItem("Mililitro");
-                break;
+            }
         }
     }//GEN-LAST:event_cboCategoriaItemStateChanged
 
     private void btnConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConvertirActionPerformed
         // TODO add your handling code here:
-        String conver = cboCategoria.getSelectedItem().toString();
+        double result = 0;
+        String categoria = cboCategoria.getSelectedItem().toString();
         
         String Opcion1= cboOrigen.getSelectedItem().toString();
         String Opcion2 = cboDestino.getSelectedItem().toString();
         
-        if(conver == "MONEDA"){
-            // del preimer combo modeda 
-            // del segundo combo 
-            // todas al conversiones
-            
+        if(categoria.equals("MONEDA")){
+            if(Opcion1 ==Opcion2){
+                JOptionPane.showMessageDialog(rootPane, "No se puede realzia la conversion, los elementos son iguales");
+            }else{
+                // Soles a dolares
+                if(Opcion1.equals("Soles") && Opcion2.equals("Dolares")){
+                    result = Double.parseDouble(txtCantidad.getText()) * 3.57;
+                    txtResultado.setText(result+" Dolar(es)");
+                }
+
+                if(Opcion1.equals("Soles") && Opcion2.equals("Euros")){
+                    result = Double.parseDouble(txtCantidad.getText()) * 4.20;
+                    txtResultado.setText(result+" Euro(s)");
+                }
+            }
         }
         
         
-        
-        
+        if("LONGITUD".equals(categoria)){
+            if(Opcion1 ==Opcion2){
+                JOptionPane.showMessageDialog(rootPane, "No se puede realzia la conversion, los elementos son iguales");
+            }else{
+                // Soles a dolares
+                if(Opcion1.equals("Soles") && Opcion2.equals("Dolar")){
+                    result = Double.parseDouble(txtCantidad.getText()) * 3.57;
+                    txtResultado.setText(result+" Dolar(es)");
+                }
+
+                if(Opcion1.equals("Soles") && Opcion2.equals("Euro")){
+                    result = Double.parseDouble(txtCantidad.getText()) * 4.20;
+                    txtResultado.setText(result+" Euro(s)");
+                }
+            }
+        }
+                            
     }//GEN-LAST:event_btnConvertirActionPerformed
 
     private void cboOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboOrigenActionPerformed
@@ -320,7 +346,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblHistorial;
+    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtResultado;
-    private javax.swing.JTextField txtValor;
     // End of variables declaration//GEN-END:variables
 }
