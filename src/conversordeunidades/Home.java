@@ -4,6 +4,8 @@
  */
 package conversordeunidades;
 
+
+import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
 
 /**
@@ -20,6 +22,67 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
     }
+    private void cargarUnidades(String categoria) {
+    cboOrigen.removeAllItems();
+    cboDestino.removeAllItems();
+
+    cboOrigen.addItem("-Seleccionar-");
+    cboDestino.addItem("-Seleccionar-");
+
+    if (categoria.equals("MONEDA")) {
+        cboOrigen.addItem("Soles");
+        cboOrigen.addItem("Euros");
+        cboOrigen.addItem("Dolares");
+
+        cboDestino.addItem("Soles");
+        cboDestino.addItem("Euros");
+        cboDestino.addItem("Dolares");
+    }
+
+    if (categoria.equals("LONGITUD")) {
+        cboOrigen.addItem("Metro");
+        cboOrigen.addItem("Pulgada");
+        cboOrigen.addItem("Pies");
+
+        cboDestino.addItem("Metro");
+        cboDestino.addItem("Pulgada");
+        cboDestino.addItem("Pies");
+    }
+
+    if (categoria.equals("PESO")) {
+        cboOrigen.addItem("Kilogramo");
+        cboOrigen.addItem("Libra");
+        cboOrigen.addItem("Gramo");
+
+        cboDestino.addItem("Kilogramo");
+        cboDestino.addItem("Libra");
+        cboDestino.addItem("Gramo");
+    }
+
+    if (categoria.equals("TEMPERATURA")) {
+        cboOrigen.addItem("Celsius");
+        cboOrigen.addItem("Fahrenheit");
+        cboOrigen.addItem("Kelvin");
+
+        cboDestino.addItem("Celsius");
+        cboDestino.addItem("Fahrenheit");
+        cboDestino.addItem("Kelvin");
+    }
+
+    if (categoria.equals("VOLUMEN")) {
+        cboOrigen.addItem("Litro");
+        cboOrigen.addItem("Mililitro");
+        cboOrigen.addItem("Galón");
+
+        cboDestino.addItem("Litro");
+        cboDestino.addItem("Mililitro");
+        cboDestino.addItem("Galón");
+    }
+}
+    private void agregarAlHistorial(String categoria, double cantidad, String unidadOrigen, String resultado) {
+    javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblHistorial.getModel();
+    modelo.addRow(new Object[] { categoria, cantidad, unidadOrigen, resultado });
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,8 +101,6 @@ public class Home extends javax.swing.JFrame {
         txtCantidad = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        cboOrigen = new javax.swing.JComboBox<>();
-        cboDestino = new javax.swing.JComboBox<>();
         btnConvertir = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnHistorial = new javax.swing.JButton();
@@ -47,6 +108,11 @@ public class Home extends javax.swing.JFrame {
         txtResultado = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHistorial = new javax.swing.JTable();
+        cboOrigen = new javax.swing.JComboBox<>();
+        cboDestino = new javax.swing.JComboBox<>();
+        jLabel7 = new javax.swing.JLabel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(159, 159, 167));
@@ -80,7 +146,7 @@ public class Home extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel2.setText("Categoria:");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 94, 96, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 96, -1));
 
         cboCategoria.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         cboCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "[Seleccione]", "MONEDA", "LONGITUD", "PESO", "TEMPERATURA", "VOLUMEN", " " }));
@@ -89,11 +155,11 @@ public class Home extends javax.swing.JFrame {
                 cboCategoriaItemStateChanged(evt);
             }
         });
-        getContentPane().add(cboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 125, 168, -1));
+        getContentPane().add(cboCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 120, 168, -1));
 
         jLabel3.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
         jLabel3.setText("Cantidad:");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 240, -1, -1));
 
         txtCantidad.setBackground(new java.awt.Color(255, 255, 255));
         txtCantidad.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
@@ -103,7 +169,7 @@ public class Home extends javax.swing.JFrame {
                 txtCantidadActionPerformed(evt);
             }
         });
-        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 290, 190, 40));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 190, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Unidad de Origen");
@@ -112,22 +178,6 @@ public class Home extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Unidad de Destino");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, -1, -1));
-
-        cboOrigen.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cboOrigen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboOrigenActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cboOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 159, -1));
-
-        cboDestino.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        cboDestino.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboDestinoActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cboDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 190, 160, -1));
 
         btnConvertir.setBackground(new java.awt.Color(0, 0, 153));
         btnConvertir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -138,35 +188,42 @@ public class Home extends javax.swing.JFrame {
                 btnConvertirActionPerformed(evt);
             }
         });
-        getContentPane().add(btnConvertir, new org.netbeans.lib.awtextra.AbsoluteConstraints(45, 372, -1, 65));
+        getContentPane().add(btnConvertir, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, 65));
 
         btnLimpiar.setBackground(new java.awt.Color(255, 51, 51));
         btnLimpiar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("Limpiar");
-        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 372, -1, 65));
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnLimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 330, -1, 65));
 
         btnHistorial.setBackground(new java.awt.Color(51, 153, 0));
         btnHistorial.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHistorial.setForeground(new java.awt.Color(255, 255, 255));
-        btnHistorial.setText("Historial");
-        getContentPane().add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(289, 375, 93, 45));
+        btnHistorial.setText("Limpiar\nHistorial");
+        btnHistorial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHistorialActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnHistorial, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 400, 140, 40));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel6.setText("Resultado:");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 100, 135, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 90, 135, -1));
 
         txtResultado.setBackground(new java.awt.Color(255, 255, 255));
         txtResultado.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         txtResultado.setForeground(new java.awt.Color(0, 0, 0));
-        getContentPane().add(txtResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 207, 57));
+        getContentPane().add(txtResultado, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 140, 207, 57));
 
         tblHistorial.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
                 "Categoría", "Valor Origen", "Unidad Origen", "Valor Convertido"
@@ -174,7 +231,21 @@ public class Home extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblHistorial);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 290, 340, 130));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 220, 360, 170));
+
+        cboOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboOrigenActionPerformed(evt);
+            }
+        });
+        getContentPane().add(cboOrigen, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 170, 30));
+
+        getContentPane().add(cboDestino, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 160, 30));
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 420, -1, -1));
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, -1, -1));
+
+        jLabel8.setText("Grupo 3");
+        getContentPane().add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -183,77 +254,20 @@ public class Home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCantidadActionPerformed
 
-    private void cboDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboDestinoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboDestinoActionPerformed
-
     private void cboCategoriaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboCategoriaItemStateChanged
         // TODO add your handling code here:
-        String  categoria = cboCategoria.getSelectedItem().toString();
-                
-        switch (categoria){
-            case "MONEDA" -> {
-                cboOrigen.removeAllItems();
-                
-                cboOrigen.addItem("Soles");
-                cboOrigen.addItem("Euros");
-                cboOrigen.addItem("Dolares");
-                
-                cboDestino.removeAllItems();
-                
-                cboDestino.addItem("Soles");
-                cboDestino.addItem("Euros");
-                cboDestino.addItem("Dolares");
-            }
-                
-            case "LONGITUD" -> {
-                cboOrigen.removeAllItems();
-                cboOrigen.addItem("Metro");
-                cboOrigen.addItem("Pulgada");
-                cboOrigen.addItem("Pies");
-                
-                cboDestino.removeAllItems();
-                cboDestino.addItem("Metro");
-                cboDestino.addItem("Pulgada");
-                cboDestino.addItem("Pies");
-            }
-                
-            case "PESO" -> {
-                cboOrigen.removeAllItems();
-                cboOrigen.addItem("Kilogramo");
-                cboOrigen.addItem("Libra");
-                cboOrigen.addItem("Onza");
-                
-                cboDestino.removeAllItems();
-                cboDestino.addItem("Kilogramo");
-                cboDestino.addItem("Libra");
-                cboDestino.addItem("Onza");
-            }
-                
-            case "TEMPERATURA" -> {
-                cboOrigen.removeAllItems();
-                cboOrigen.addItem("Celcius");
-                cboOrigen.addItem("Fahrenheit");
-                cboOrigen.addItem("Kelvin");
-                
-                cboDestino.removeAllItems();
-                cboDestino.addItem("Celcius");
-                cboDestino.addItem("Fahrenheit");
-                cboDestino.addItem("Kelvin");
-            }
-                
-            case "VOLUMEN" -> {
-                cboOrigen.removeAllItems();
-                cboOrigen.addItem("Litro");
-                cboOrigen.addItem("Metro Cúbico");
-                cboOrigen.addItem("Mililitro");
-                
-                cboDestino.removeAllItems();
-                cboDestino.addItem("Litro");
-                cboDestino.addItem("Metro Cúbico");
-                cboDestino.addItem("Mililitro");
-            }
+        if (evt.getStateChange() == ItemEvent.SELECTED) {
+        String categoria = cboCategoria.getSelectedItem().toString();
+        if (!categoria.equals("[Seleccione]")) {
+            cargarUnidades(categoria);
+        } else {
+            cboOrigen.removeAllItems();
+            cboDestino.removeAllItems();
+            cboOrigen.addItem("-Seleccionar-");
+            cboDestino.addItem("-Seleccionar-");
         }
+    }      
+       
     }//GEN-LAST:event_cboCategoriaItemStateChanged
 
     private void btnConvertirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConvertirActionPerformed
@@ -265,45 +279,276 @@ public class Home extends javax.swing.JFrame {
         String Opcion2 = cboDestino.getSelectedItem().toString();
         
         if(categoria.equals("MONEDA")){
-            if(Opcion1 ==Opcion2){
-                JOptionPane.showMessageDialog(rootPane, "No se puede realzia la conversion, los elementos son iguales");
+            if(Opcion1.equals(Opcion2)){
+                JOptionPane.showMessageDialog(rootPane, "No se puede realizar la conversion, los elementos son iguales");
             }else{
                 // Soles a dolares
-                if(Opcion1.equals("Soles") && Opcion2.equals("Dolares")){
-                    result = Double.parseDouble(txtCantidad.getText()) * 3.57;
-                    txtResultado.setText(result+" Dolar(es)");
-                }
+                 double cantidad = Double.parseDouble(txtCantidad.getText());
 
-                if(Opcion1.equals("Soles") && Opcion2.equals("Euros")){
-                    result = Double.parseDouble(txtCantidad.getText()) * 4.20;
-                    txtResultado.setText(result+" Euro(s)");
-                }
-            }
+        if (Opcion1.equals("Soles") && Opcion2.equals("Dolares")) {
+            result = cantidad * 0.28;
+            txtResultado.setText(String.format("%.3f", result) + " Dólar(es)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
         }
-        
-        
-        if("LONGITUD".equals(categoria)){
-            if(Opcion1 ==Opcion2){
-                JOptionPane.showMessageDialog(rootPane, "No se puede realzia la conversion, los elementos son iguales");
-            }else{
-                // Soles a dolares
-                if(Opcion1.equals("Soles") && Opcion2.equals("Dolar")){
-                    result = Double.parseDouble(txtCantidad.getText()) * 3.57;
-                    txtResultado.setText(result+" Dolar(es)");
-                }
 
-                if(Opcion1.equals("Soles") && Opcion2.equals("Euro")){
-                    result = Double.parseDouble(txtCantidad.getText()) * 4.20;
-                    txtResultado.setText(result+" Euro(s)");
-                }
-            }
+        if (Opcion1.equals("Soles") && Opcion2.equals("Euros")) {
+            result = cantidad * 0.24;
+            txtResultado.setText(String.format("%.3f", result) + " Euro(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
         }
-                            
+
+        if (Opcion1.equals("Dolares") && Opcion2.equals("Soles")) {
+            result = cantidad * 3.57;
+            txtResultado.setText(String.format("%.3f", result) + " Sol(es)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+       }
+
+        if (Opcion1.equals("Euros") && Opcion2.equals("Soles")) {
+            result = cantidad * 4.20;
+            txtResultado.setText(String.format("%.3f", result) + " Sol(es)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        if (Opcion1.equals("Dolares") && Opcion2.equals("Euros")) {
+            result = cantidad * 0.92;
+            txtResultado.setText(String.format("%.3f", result) + " Euro(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        if (Opcion1.equals("Euros") && Opcion2.equals("Dolares")) {
+            result = cantidad * 1.09;
+            txtResultado.setText(String.format("%.3f", result) + " Dólar(es)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+    }
+}
+
+        if (categoria.equals("LONGITUD")) {
+    if (Opcion1.equals(Opcion2)) {
+        JOptionPane.showMessageDialog(rootPane, "No se puede realizar la conversión, las unidades son iguales.");
+    } else {
+        double cantidad = Double.parseDouble(txtCantidad.getText());
+
+        // Metro a Pulgada
+        if (Opcion1.equals("Metro") && Opcion2.equals("Pulgada")) {
+            result = cantidad * 39.3701;
+           txtResultado.setText(String.format("%.3f", result) + " Pulgada(s)");
+           agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Metro a Pies
+        if (Opcion1.equals("Metro") && Opcion2.equals("Pies")) {
+            result = cantidad * 3.28084;
+            txtResultado.setText(String.format("%.3f", result) + " Pie(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Pulgada a Metro
+        if (Opcion1.equals("Pulgada") && Opcion2.equals("Metro")) {
+            result = cantidad * 0.0254;
+            txtResultado.setText(String.format("%.3f", result) + " Metro(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Pulgada a Pies
+        if (Opcion1.equals("Pulgada") && Opcion2.equals("Pies")) {
+            result = cantidad * 0.0833333;
+            txtResultado.setText(String.format("%.3f", result) + " Pie(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Pies a Metro
+        if (Opcion1.equals("Pies") && Opcion2.equals("Metro")) {
+            result = cantidad * 0.3048;
+            txtResultado.setText(String.format("%.3f", result) + " Metro(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Pies a Pulgada
+        if (Opcion1.equals("Pies") && Opcion2.equals("Pulgada")) {
+            result = cantidad * 12;
+            txtResultado.setText(String.format("%.3f", result) + " Pulgada(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+    }
+}
+        if (categoria.equals("PESO")) {
+    if (Opcion1.equals(Opcion2)) {
+        JOptionPane.showMessageDialog(rootPane, "No se puede realizar la conversión, las unidades son iguales.");
+    } else {
+        double cantidad = Double.parseDouble(txtCantidad.getText());
+
+        // Kilogramo a Libra
+        if (Opcion1.equals("Kilogramo") && Opcion2.equals("Libra")) {
+            result = cantidad * 2.20462;
+            txtResultado.setText(String.format("%.3f", result) + " Libra(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Kilogramo a Gramo
+        if (Opcion1.equals("Kilogramo") && Opcion2.equals("Gramo")) {
+            result = cantidad * 1000;
+            txtResultado.setText(String.format("%.3f", result) + " Gramo(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Libra a Kilogramo
+        if (Opcion1.equals("Libra") && Opcion2.equals("Kilogramo")) {
+            result = cantidad * 0.453592;
+            txtResultado.setText(String.format("%.3f", result) + " Kilogramo(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Libra a Gramo
+        if (Opcion1.equals("Libra") && Opcion2.equals("Gramo")) {
+            result = cantidad * 453.592;
+            txtResultado.setText(String.format("%.3f", result) + " Gramo(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Gramo a Kilogramo
+        if (Opcion1.equals("Gramo") && Opcion2.equals("Kilogramo")) {
+            result = cantidad / 1000;
+            txtResultado.setText(String.format("%.3f", result) + " Kilogramo(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Gramo a Libra
+        if (Opcion1.equals("Gramo") && Opcion2.equals("Libra")) {
+            result = cantidad * 0.00220462;
+            txtResultado.setText(String.format("%.3f", result) + " Libra(s)");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+    }
+}
+        if (categoria.equals("TEMPERATURA")) {
+    if (Opcion1.equals(Opcion2)) {
+        JOptionPane.showMessageDialog(rootPane, "No se puede realizar la conversión, las unidades son iguales.");
+    } else {
+        double cantidad = Double.parseDouble(txtCantidad.getText());
+
+        // Celsius a Fahrenheit
+        if (Opcion1.equals("Celsius") && Opcion2.equals("Fahrenheit")) {
+            result = (cantidad * 9 / 5) + 32;
+            txtResultado.setText(String.format("%.3f", result) + " °F");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Celsius a Kelvin
+        if (Opcion1.equals("Celsius") && Opcion2.equals("Kelvin")) {
+            result = cantidad + 273.15;
+            txtResultado.setText(String.format("%.3f", result) + " K");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Fahrenheit a Celsius
+        if (Opcion1.equals("Fahrenheit") && Opcion2.equals("Celsius")) {
+            result = (cantidad - 32) * 5 / 9;
+            txtResultado.setText(String.format("%.3f", result) + " °C");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Fahrenheit a Kelvin
+        if (Opcion1.equals("Fahrenheit") && Opcion2.equals("Kelvin")) {
+            result = (cantidad - 32) * 5 / 9 + 273.15;
+            txtResultado.setText(String.format("%.3f", result) + " K");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Kelvin a Celsius
+        if (Opcion1.equals("Kelvin") && Opcion2.equals("Celsius")) {
+            result = cantidad - 273.15;
+            txtResultado.setText(String.format("%.3f", result) + " °C");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Kelvin a Fahrenheit
+        if (Opcion1.equals("Kelvin") && Opcion2.equals("Fahrenheit")) {
+            result = (cantidad - 273.15) * 9 / 5 + 32;
+            txtResultado.setText(String.format("%.3f", result) + " °F");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+    }
+}
+      if (categoria.equals("VOLUMEN")) {
+    if (Opcion1.equals(Opcion2)) {
+        JOptionPane.showMessageDialog(rootPane, "No se puede realizar la conversión, las unidades son iguales.");
+    } else {
+        double cantidad = Double.parseDouble(txtCantidad.getText());
+
+        // Litro a Mililitro
+        if (Opcion1.equals("Litro") && Opcion2.equals("Mililitro")) {
+            result = cantidad * 1000;
+            txtResultado.setText(String.format("%.3f", result) + " ml");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Litro a Galón
+        if (Opcion1.equals("Litro") && Opcion2.equals("Galón")) {
+            result = cantidad * 0.264172;
+            txtResultado.setText(String.format("%.3f", result) + " gal");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Mililitro a Litro
+        if (Opcion1.equals("Mililitro") && Opcion2.equals("Litro")) {
+            result = cantidad / 1000;
+            txtResultado.setText(String.format("%.3f", result) + " l");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Mililitro a Galón
+        if (Opcion1.equals("Mililitro") && Opcion2.equals("Galón")) {
+            result = cantidad * 0.000264172;
+            txtResultado.setText(String.format("%.3f", result) + " gal");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Galón a Litro
+        if (Opcion1.equals("Galón") && Opcion2.equals("Litro")) {
+            result = cantidad * 3.78541;
+            txtResultado.setText(String.format("%.3f", result) + " l");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+
+        // Galón a Mililitro
+        if (Opcion1.equals("Galón") && Opcion2.equals("Mililitro")) {
+            result = cantidad * 3785.41;
+            txtResultado.setText(String.format("%.3f", result) + " ml");
+            agregarAlHistorial(categoria, cantidad, Opcion1, txtResultado.getText());
+        }
+    }
+}                      
     }//GEN-LAST:event_btnConvertirActionPerformed
 
     private void cboOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboOrigenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboOrigenActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        // TODO add your handling code here:
+        txtCantidad.setText("");
+        txtResultado.setText("");
+        cboCategoria.setSelectedIndex(0);
+
+        // Reiniciar combos con solo la opción "-Seleccionar-"
+        cboOrigen.removeAllItems();
+        cboDestino.removeAllItems();
+        cboOrigen.addItem("-Seleccionar-");
+        cboDestino.addItem("-Seleccionar-");
+
+       
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnHistorialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistorialActionPerformed
+        // TODO add your handling code here:
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Deseas borrar el historial?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblHistorial.getModel();
+        modelo.setRowCount(0); // Limpia todas las filas
+    }
+
+    }//GEN-LAST:event_btnHistorialActionPerformed
 
     /**
      * @param args the command line arguments
@@ -343,8 +588,11 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTable tblHistorial;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtResultado;
